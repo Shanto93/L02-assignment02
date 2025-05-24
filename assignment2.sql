@@ -465,10 +465,25 @@ VALUES (
         'Adjacent feeding on fish'
     );
 
-
 SELECT * FROM rangers;
+
 SELECT * FROM species;
+
 SELECT * FROM sightings;
 
 --Question 1:Register a new ranger with provided data with name = 'Derek Fox' and region = 'Coastal Plains'
-INSERT INTO rangers (ranger_id,name, region) VALUES(31,'Derek Fox','Coastal Plains');
+INSERT INTO
+    rangers (ranger_id, name, region)
+VALUES (
+        31,
+        'Derek Fox',
+        'Coastal Plains'
+    );
+
+--Question 2:Count unique species ever sighted.
+SELECT COUNT(DISTINCT species_id) AS unique_species_count
+FROM sightings;
+
+SELECT COUNT(DISTINCT sig.species_id) AS unique_species_count
+FROM sightings AS sig
+JOIN species AS s ON sig.species_id = s.species_id;
