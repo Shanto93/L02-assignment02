@@ -463,13 +463,23 @@ VALUES (
         '2024-04-21 10:15:00',
         'Snowfall Pass',
         'Adjacent feeding on fish'
+    ),
+    (
+        21,
+        1,
+        12,
+        '2024-03-15 06:30:00',
+        'Sundarbans West Zone',
+        'Adult male tiger spotted near riverbank'
+    ),
+    (
+        22,
+        2,
+        10,
+        '2024-03-16 14:45:00',
+        'Snowfall Pass',
+        'Large crocodile basking on mudflat'
     );
-
-SELECT * FROM rangers;
-
-SELECT * FROM species;
-
-SELECT * FROM sightings;
 
 --Question 1:Register a new ranger with provided data with name = 'Derek Fox' and region = 'Coastal Plains'
 INSERT INTO
@@ -481,9 +491,21 @@ VALUES (
     );
 
 --Question 2:Count unique species ever sighted.
-SELECT COUNT(DISTINCT species_id) AS unique_species_count
-FROM sightings;
-
 SELECT COUNT(DISTINCT sig.species_id) AS unique_species_count
 FROM sightings AS sig
-JOIN species AS s ON sig.species_id = s.species_id;
+    JOIN species AS s ON sig.species_id = s.species_id;
+
+--Question 3: Find all sightings where the location includes "Pass".
+SELECT "location" FROM sightings WHERE "location" ILIKE '%Pass%';
+
+--Question 4:  List each ranger's name and their total number of sightings.
+SELECT r.name AS ranger_name, COUNT(s.sighting_id) AS total_sightings FROM rangers AS r
+LEFT JOIN sightings AS s ON r.ranger_id = s.ranger_id
+GROUP BY r.name
+ORDER BY total_sightings DESC;
+
+
+--Question 5:List species that have never been sighted.
+SELECT common_name FROM species AS s
+LEFT JOIN sightings AS sig ON s.species_id = sig.species_id
+WHERE sig.sighting_id IS NULL;
