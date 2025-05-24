@@ -1,6 +1,6 @@
 --rangers table
 CREATE TABLE rangers (
-    ranger_id INT PRIMARY KEY NOT NULL,
+    ranger_id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
     region VARCHAR(50) NOT NULL
 );
@@ -161,7 +161,7 @@ VALUES (
 
 --Species Table
 CREATE TABLE species (
-    species_id INT PRIMARY KEY NOT NULL,
+    species_id SERIAL PRIMARY KEY NOT NULL,
     common_name VARCHAR(50) NOT NULL,
     scientific_name VARCHAR(100) NOT NULL,
     discovery_date TIMESTAMP NOT NULL,
@@ -285,7 +285,7 @@ VALUES (
 
 --Sightings Table
 CREATE TABLE sightings (
-    sighting_id INT PRIMARY KEY NOT NULL,
+    sighting_id SERIAL PRIMARY KEY NOT NULL,
     ranger_id INT NOT NULL,
     species_id INT NOT NULL,
     sighting_time TIMESTAMP NOT NULL,
@@ -465,8 +465,10 @@ VALUES (
         'Adjacent feeding on fish'
     );
 
+
 SELECT * FROM rangers;
-
 SELECT * FROM species;
-
 SELECT * FROM sightings;
+
+--Question 1:Register a new ranger with provided data with name = 'Derek Fox' and region = 'Coastal Plains'
+INSERT INTO rangers (ranger_id,name, region) VALUES(31,'Derek Fox','Coastal Plains');
