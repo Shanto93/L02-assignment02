@@ -508,3 +508,15 @@ SELECT common_name,sighting_time,"name" FROM sightings
 JOIN rangers ON sightings.ranger_id = rangers.ranger_id
 JOIN species ON sightings.species_id = species.species_id
 ORDER BY sighting_time DESC LIMIT 2;
+
+--Question 7: Update all species discovered before year 1800 to have status 'Historic'.
+UPDATE species
+SET conservation_status = 'Historic'
+WHERE extract(YEAR FROM discovery_date) < 1800;
+
+--Question 8: Label each sighting's time of day as 'Morning', 'Afternoon', or 'Evening'.
+
+
+
+
+--Question 9: Delete rangers who have never sighted any species
