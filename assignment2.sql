@@ -482,18 +482,12 @@ VALUES (
     );
 
 --Question 1:Register a new ranger with provided data with name = 'Derek Fox' and region = 'Coastal Plains'
-INSERT INTO
-    rangers (ranger_id, name, region)
-VALUES (
-        31,
-        'Derek Fox',
-        'Coastal Plains'
-    );
+INSERT INTO rangers (ranger_id, name, region) VALUES (31,'Derek Fox','Coastal Plains');
 
 --Question 2:Count unique species ever sighted.
 SELECT COUNT(DISTINCT sig.species_id) AS unique_species_count
 FROM sightings AS sig
-    JOIN species AS s ON sig.species_id = s.species_id;
+JOIN species AS s ON sig.species_id = s.species_id;
 
 --Question 3: Find all sightings where the location includes "Pass".
 SELECT "location" FROM sightings WHERE "location" ILIKE '%Pass%';
@@ -504,8 +498,13 @@ LEFT JOIN sightings AS s ON r.ranger_id = s.ranger_id
 GROUP BY r.name
 ORDER BY total_sightings DESC;
 
-
 --Question 5:List species that have never been sighted.
 SELECT common_name FROM species AS s
 LEFT JOIN sightings AS sig ON s.species_id = sig.species_id
 WHERE sig.sighting_id IS NULL;
+
+--Question 6: Show the most recent 2 sightings.
+SELECT common_name,sighting_time,"name" FROM sightings
+JOIN rangers ON sightings.ranger_id = rangers.ranger_id
+JOIN species ON sightings.species_id = species.species_id
+ORDER BY sighting_time DESC LIMIT 2;
