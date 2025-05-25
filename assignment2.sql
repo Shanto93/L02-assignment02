@@ -515,8 +515,19 @@ SET conservation_status = 'Historic'
 WHERE extract(YEAR FROM discovery_date) < 1800;
 
 --Question 8: Label each sighting's time of day as 'Morning', 'Afternoon', or 'Evening'.
-
-
-
+SELECT sighting_id,
+    CASE
+        WHEN extract(HOUR FROM sighting_time) < 12 THEN 'Morning'
+        WHEN extract(HOUR FROM sighting_time) < 18 THEN 'Afternoon'
+        ELSE 'Evening'
+    END AS time_of_day
+FROM sightings;
 
 --Question 9: Delete rangers who have never sighted any species
+DELETE FROM rangers
+WHERE ranger_id IN (
+    SELECT r.ranger_id
+    FROM rangers AS r
+    LEFT JOIN sightings AS s ON r.ranger_id = s.ranger_id
+    WHERE s.sighting_id IS NULL
+);
